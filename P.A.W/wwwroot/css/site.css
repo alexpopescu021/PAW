@@ -162,6 +162,7 @@ h1 {
     .answers label {
         display: block;
         margin-bottom: 10px;
+        color:black;
     }
 
 button {
