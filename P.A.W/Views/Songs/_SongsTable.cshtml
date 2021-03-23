@@ -10,6 +10,15 @@
         width: 100%;
     }
 
+    .stroke-transparent { /* nu folosesc fa-premium  */
+        -webkit-text-stroke: 2px white;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .fa-star {
+        color: white;
+    }
+
     td:not(:last-child):hover {
         background-color: mediumpurple;
     }
@@ -18,9 +27,30 @@
         background-color: grey;
     }
 
+    .btn:hover {
+        background-color: grey;
+    }
+
+    
 
     .like {
         margin-right: 10px;
+    }
+
+    .button{
+        
+    }
+
+
+    .block {
+        display: block;
+        width: 100%;
+        border: none;
+        background-color: #4CAF50;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
     }
 </style>
 
@@ -31,6 +61,7 @@
             <th>Singer</th>
             <th>Genre</th>
             <th>Actions</th>
+            <th width="50">Player</th>
         </tr>
     </thead>
     <tbody>
@@ -38,12 +69,21 @@
             <td>Alfreds Futterkiste</td>
             <td>Maria Anders</td>
             <td>Germany</td>
-            <td></td>
+            <td>
+                <div class="d-flex justify-content-around">
+                    <button class="btn" onclick="myFunction()" /><i id="icon" class="fa fa-star stroke-transparent"></i>
+                </div>
+            </td>
+           
+            <td width="40%">
+                    <button class="button block" />
+            </td>
         </tr>
         <tr>
             <td>Centro comercial Moctezuma</td>
             <td>Francisco Chang</td>
             <td>Mexico</td>
+            <td></td>
             <td></td>
         </tr>
         <tr>
@@ -51,11 +91,13 @@
             <td>Roland Mendel</td>
             <td>Austria</td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>Island Trading</td>
             <td>Helen Bennett</td>
             <td>UK</td>
+            <td></td>
             <td></td>
         </tr>
         <tr>
@@ -63,11 +105,6 @@
             <td>Yoshi Tannamuri</td>
             <td>Canada</td>
             <td></td>
-        </tr>
-        <tr>
-            <td>Magazzini Alimentari Riuniti</td>
-            <td>Giovanni Rovelli</td>
-            <td>Italy</td>
             <td></td>
         </tr>
         <tr>
@@ -75,11 +112,6 @@
             <td>Giovanni Rovelli</td>
             <td>Italy</td>
             <td></td>
-        </tr>
-        <tr>
-            <td>Magazzini Alimentari Riuniti</td>
-            <td>Giovanni Rovelli</td>
-            <td>Italy</td>
             <td></td>
         </tr>
         <tr>
@@ -87,14 +119,40 @@
             <td>Giovanni Rovelli</td>
             <td>Italy</td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>Magazzini Alimentari Riuniti</td>
             <td>Giovanni Rovelli</td>
             <td>Italy</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Magazzini Alimentari Riuniti</td>
+            <td>Giovanni Rovelli</td>
+            <td>Italy</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Magazzini Alimentari Riuniti</td>
+            <td>Giovanni Rovelli</td>
+            <td>Italy</td>
+            <td></td>
             <td></td>
         </tr>
     </tbody>
 
 </table>
 
+<script>
+
+
+    function myFunction() {
+        var element = document.getElementById("icon");
+        element.classList.toggle("stroke-transparent");
+    }
+
+
+</script>

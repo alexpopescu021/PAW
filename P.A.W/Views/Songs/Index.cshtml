@@ -39,6 +39,8 @@
             loadTable();
         });
 
+        
+
         function loadTable(modalName) {
             loadServerPartialView("#songsTableContainer", "/Songs/SongsTable").done(function () {
                 $('#Songs').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
