@@ -35,7 +35,7 @@ namespace P.A.W.Controllers
         [HttpGet]
         public ActionResult UploadAudio()
         {
-            List<AudioFile> audiolist = new List<AudioFile>();
+            List<Song> audiolist = new List<Song>();
             /*
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(CS))

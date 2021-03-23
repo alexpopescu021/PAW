@@ -62,6 +62,13 @@ namespace P.A.W
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(env.ContentRootPath, "Assets")),
+                RequestPath = "/Assets"
+            });
+
             app.UseRouting();
 
             app.UseAuthentication();

@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Assets\RickAstley_NeverGonnaGiveYouUp.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\css\bg.jpg" />
   </ItemGroup>
 
