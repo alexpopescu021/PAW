@@ -23,4 +23,8 @@
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\P.A.W.Model\PAW.Model.csproj" />
+  </ItemGroup>
+
 </Project>

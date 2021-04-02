@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using P.A.W.Data;
+using PAW.DataAcess;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,8 +33,15 @@ namespace P.A.W
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            services.AddDbContext<PAWDbContext>(options => 
+                options.UseSqlServer(
+                        Configuration.GetConnectionString("PAWConnection")));
+
             services.AddControllersWithViews();
             //services.AddRazorPages();
             services.AddSingleton<IFileProvider>(

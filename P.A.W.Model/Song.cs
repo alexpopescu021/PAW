@@ -1,14 +1,20 @@
-﻿using System;
+﻿
+using System;
 
-namespace P.A.W.Model
+namespace PAW.Model
 {
-    public class Song
+    public class Song : DataEntity
     {
-        public int ID { get; set; }
-        public string Title { get; set; }
-        public string Path { get; set; }
-        public string Artist { get; set; }
-        public string Genre { get; set; }
+        
+        public string Title { get; protected set; }
+        public string Path { get; protected set; }
+        public string Artist { get; protected set; }
+        public string Genre { get; protected set; }
+
+        protected Song()
+        { 
+            
+        }
 
     }
 }

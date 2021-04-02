@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using P.A.W.Model;
+
 using P.A.W.Models;
 using System;
 using System.IO;
@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Storage;
+using PAW.Model;
 
 namespace P.A.W.Controllers
 {
