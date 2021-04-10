@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\P.A.W.Model\PAW.Model.csproj" />
-    <ProjectReference Include="..\PAWDataAcess.Abstractions\PAWDataAcess.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

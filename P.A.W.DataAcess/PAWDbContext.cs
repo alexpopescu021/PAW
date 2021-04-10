@@ -12,5 +12,6 @@ namespace PAW.DataAcess
 
         }
         public DbSet<Song> Songs { get; set; }
+        public DbSet<Quiz> Quizzes { get; set; }
     }
 }

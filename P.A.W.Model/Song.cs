@@ -11,9 +11,25 @@ namespace PAW.Model
         public string Artist { get; protected set; }
         public string Genre { get; protected set; }
 
-        protected Song()
-        { 
+        public static Song Create(string artist, string genre, string path, string title)
+        {
+
+            return new Song
+            {
+                Id = Guid.NewGuid(),
+                Artist = artist,
+                Genre = genre,
+                Path = path,
+                Title = title
+            };
+        }
+
+        public Song Update(string name)
+        {
+            this.Title = name;
             
+
+            return this;
         }
 
     }

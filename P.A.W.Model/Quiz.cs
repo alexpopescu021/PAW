@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PAW.Model
 {
-    class Quiz : DataEntity
+    public class Quiz : DataEntity
     {
         public string Question { get; protected set; }
 
