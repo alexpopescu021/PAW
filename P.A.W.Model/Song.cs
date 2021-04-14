@@ -24,10 +24,11 @@ namespace PAW.Model
             };
         }
 
-        public Song Update(string name)
+        public Song Update(string artist, string genre, string title)
         {
-            this.Title = name;
-            
+            this.Title = title;
+            this.Artist = artist;
+            this.Genre = genre;
 
             return this;
         }

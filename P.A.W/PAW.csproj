@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AppLogic\AppLogic.csproj" />
     <ProjectReference Include="..\P.A.W.DataAcess\PAWDataAcess.csproj" />
     <ProjectReference Include="..\P.A.W.Model\PAW.Model.csproj" />
   </ItemGroup>

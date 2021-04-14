@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
+﻿using AppLogic;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PAW.ViewModels;
+using PAW.ViewModels.Songs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +13,12 @@ namespace P.A.W.Controllers
 {
     public class SongsController : Controller
     {
+
+        private readonly SongService songService;
+        public SongsController(SongService songService)
+        {
+            this.songService = songService;
+        }
         public IActionResult Index()
         {
             return View();
@@ -17,9 +26,22 @@ namespace P.A.W.Controllers
 
         public IActionResult SongsTable()
         {
-            
+            SongListViewModel songViewModel = null;
+            try
+            {
+                songViewModel = new SongListViewModel()
+                {
+                    SongViews = songService.GetAllSongs()
+                };
 
-            return PartialView("_SongsTable");
+            }
+            catch (Exception e)
+            {
+               
+            }
+
+            return PartialView("_SongsTable", songViewModel);
+
         }
 
         [HttpPost]
@@ -29,13 +51,16 @@ namespace P.A.W.Controllers
                 return Content("file not selected");
 
             var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "wwwroot",
+                         "Assets",
                         file.FileName);
 
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
+            var name = file.FileName.ToString();
+            string[] file_name = name.Split('_', '.');
+            songService.CreateNewSong(file_name[1], "Genre", path, file_name[0]);
 
             return RedirectToAction("Index");
         }
@@ -47,7 +72,7 @@ namespace P.A.W.Controllers
 
             var path = Path.Combine(
                            Directory.GetCurrentDirectory(),
-                           "wwwroot", filename);
+                           "Assets", filename);
 
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
@@ -57,6 +82,57 @@ namespace P.A.W.Controllers
             memory.Position = 0;
             return File(memory, Path.GetFileName(path));
         }
+
+
+        [HttpGet]
+        public IActionResult Remove([FromRoute] string Id)
+        {
+
+            RemoveSongViewModel removeViewModel = new RemoveSongViewModel()
+            {
+                Id = Id
+            };
+
+            return PartialView("_RemoveSongPartial", removeViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Remove(RemoveSongViewModel removeData)
+        {
+
+            songService.RemoveSong(removeData.Id);
+
+
+            return RedirectToAction("Index");
+
+            //return PartialView("_RemoveSongPartial", removeData);
+        }
+
+
+        [HttpGet]
+        public IActionResult EditSong([FromRoute] string id)
+        {
+            var song = songService.GetSongById(id);
+            NewSongViewModel model = new NewSongViewModel()
+            {
+                SongId = song.Id,
+                Artist = song.Artist,
+                Genre = song.Genre,
+                Title = song.Title
+            }
+            ;
+
+            return PartialView("_NewSongPartial", model);
+
+        }
+
+        [HttpPost]
+        public ActionResult EditSong([FromForm] NewSongViewModel songData)
+        {
+            songService.Update(songData.SongId,songData.Artist,songData.Genre, songData.Title);
+            return RedirectToAction("Index");
+        }
+
 
     }
 

@@ -1,8 +1,14 @@
-﻿<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+﻿@using PAW.ViewModels.Songs
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
+<form asp-controller="Songs" asp-action="UploadFile" method="post"
+      enctype="multipart/form-data">
 
+    <input type="file" name="file" />
+    <button type="submit">Upload File</button>
+</form>
 
 
 <div id="songsTableContainer"></div>
@@ -20,7 +26,7 @@
             loadTable();
         });
 
-        
+
 
         function loadTable(modalName) {
             loadServerPartialView("#songsTableContainer", "/Songs/SongsTable").done(function () {
@@ -31,5 +37,67 @@
         $(function () {
             $('#modal').modal('toggle');
         });
+
+
+         function LoadRemoveSongView(Id) {
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Songs")'+"/" + Id);
+        }
+
+         function LoadEditSongView(Id) {
+                    loadServerPartialView("#editSongBody", '@Url.Action("EditSong", "Songs")' + "/" + Id).done(function () { $.validator.unobtrusive.parse(document);});
+
+        }
+
+        
     </script>
 }
+
+
+
+
+<form method="post" asp-controller="Songs" asp-action="Remove"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="loadTable('#removeModal')"
+      data-ajax-update="#removeBody">
+
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center" role="document">
+            <div class="modal-content" style="max-width: 60%">
+                <div class="modal-body" id="removeBody">
+                    <partial name="_RemoveSongPartial" model="new RemoveSongViewModel()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<form id="editSongForm" method="post" asp-controller="Songs" asp-action="EditSong"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="loadTable('#editTrailerModal')"
+      data-ajax-update="#editSongBody">
+
+    @Html.AntiForgeryToken()
+    <div class="modal" id="editSongModal" tabindex="-1" role="dialog" aria-labelledby="editSongModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bold" id="editSongModalLabel">Edit Song</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="editSongBody" class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
+                    <button id="btnSaveChanges" class="btn btn-success" type="submit"> Confirm </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

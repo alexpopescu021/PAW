@@ -1,3 +1,4 @@
+using AppLogic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +11,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using P.A.W.Data;
 using PAW.DataAcess;
+using PAWDataAcess.Abstractions;
+using PAWDataAcess.Repos;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,6 +52,9 @@ namespace P.A.W
                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
             services.AddMvc();
+            services.AddScoped<IPersistanceContext, EFPersistanceContext>();
+            services.AddScoped<ISongRepository, EFSongRepository>();
+            services.AddScoped<SongService>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

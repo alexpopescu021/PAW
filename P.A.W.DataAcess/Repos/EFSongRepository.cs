@@ -36,6 +36,15 @@ namespace PAWDataAcess.Repos
             return dbContext.Songs.AsEnumerable();
         }
 
+        public Song UpdateSong(Guid songId, string title, string genre, string artist)
+        {
+            var song = dbContext.Songs.Find(songId);
+            song.Update(artist, genre, title);
+            dbContext.Update(song);
+            dbContext.SaveChanges();
+            return song;
+        }
+
         public bool RemoveSong(Guid songId)
         {
             var entityToRemove = GetById(songId);
