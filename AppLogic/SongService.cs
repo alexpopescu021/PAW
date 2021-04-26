@@ -17,6 +17,11 @@ namespace AppLogic
             this.persistanceContext = persistanceContext;
         }
 
+        public IEnumerable<Song> GetSongsByGenre(string genre)
+        {
+
+            return songRepository.GetSongsByGenre(genre);
+        }
 
         public Song GetSongById(string songId)
         {

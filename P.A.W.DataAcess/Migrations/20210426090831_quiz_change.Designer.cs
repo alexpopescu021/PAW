@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PAW.DataAcess;
 
 namespace PAWDataAcess.Migrations
 {
     [DbContext(typeof(PAWDbContext))]
-    partial class PAWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210426090831_quiz_change")]
+    partial class quiz_change
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,12 +33,10 @@ namespace PAWDataAcess.Migrations
                     b.Property<string>("Answer2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SongId")
+                    b.Property<Guid>("SongId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SongId");
 
                     b.ToTable("Quizzes");
                 });
@@ -62,13 +62,6 @@ namespace PAWDataAcess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Songs");
-                });
-
-            modelBuilder.Entity("PAW.Model.Quiz", b =>
-                {
-                    b.HasOne("PAW.Model.Song", "Song")
-                        .WithMany()
-                        .HasForeignKey("SongId");
                 });
 #pragma warning restore 612, 618
         }

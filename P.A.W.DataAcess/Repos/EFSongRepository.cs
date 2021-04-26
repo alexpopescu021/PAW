@@ -36,6 +36,12 @@ namespace PAWDataAcess.Repos
             return dbContext.Songs.AsEnumerable();
         }
 
+        public IEnumerable<Song> GetSongsByGenre(string genre)
+        {
+
+            return dbContext.Songs.Where(song => song.Genre == genre).AsEnumerable();
+        }
+
         public Song UpdateSong(Guid songId, string title, string genre, string artist)
         {
             var song = dbContext.Songs.Find(songId);

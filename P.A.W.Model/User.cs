@@ -6,7 +6,7 @@ namespace PAW.Model
 {
     public class User : DataEntity
     {
-        public string UserId { get; protected set; }
+        //public string UserId { get; protected set; }
         public string Email { get; protected set; }
         public string Name { get; protected set; }
         public void SetName(string name)

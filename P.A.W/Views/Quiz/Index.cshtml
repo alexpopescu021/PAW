@@ -1,4 +1,6 @@
-﻿<style>
+﻿@using PAW.ViewModels.Quizes
+@model QuizListViewModel
+<style>
     .btn-info {
         height: 200px;
         width: 200px;
@@ -17,6 +19,20 @@
     }
 </style>
 
+@foreach (var quiz in Model.QuizViews)
+{ 
+<tr>
+    <td>
+        <audio controls="controls">
+            <source src="@quiz." type="audio/mpeg" />
+        </audio>
+    </td>
+    <td>@Html.DisplayFor(modelItem => quiz.Answer1)</td>
+    <td>@Html.DisplayFor(modelItem => quiz.Answer2)</td>
+</tr>
+
+
+}
 <div class="row">
     <div class="column">
         <button class="fa fa-headphones btn-info fa-6x" data-toggle="modal" data-target="#exampleModal">
@@ -29,10 +45,6 @@
         <div class="desc ">Quiz 2</div>
         </div>
     </div>
-
-
-
-
 
 
 

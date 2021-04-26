@@ -12,5 +12,7 @@ namespace PAWDataAcess.Abstractions
         new IEnumerable<Song> GetAll();
         bool RemoveSong(Guid songId);
         Song UpdateSong(Guid songId, string title, string genre, string artist);
+
+        IEnumerable<Song> GetSongsByGenre(string genre);
     }
 }
