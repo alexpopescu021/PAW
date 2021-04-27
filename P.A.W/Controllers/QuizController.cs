@@ -23,15 +23,19 @@ namespace P.A.W.Controllers
         public IActionResult Index()
         {
 
-          
+            var quiz = new NewQuizViewModel()
+            {
+                SongList = songService.GetAllSongs().ToList()
+            };
 
-            
+            var songs = songService.GetAllSongs();
+            List<Song> songList = new List<Song>();
+
+            songList = songs.ToList();
+
+            songList.Insert(0, new Song { Id = new Guid(), Title = "select song" });
+            ViewBag.message = songList;
             return View();
-        }
-
-        public IActionResult CreateQuiz()
-        {
-            return PartialView("_NewQuizPartial", new NewQuizViewModel());
         }
 
         
