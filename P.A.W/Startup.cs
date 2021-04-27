@@ -54,7 +54,9 @@ namespace P.A.W
             services.AddMvc();
             services.AddScoped<IPersistanceContext, EFPersistanceContext>();
             services.AddScoped<ISongRepository, EFSongRepository>();
+            services.AddScoped<IQuizRepository, EFQuizRepository>();
             services.AddScoped<SongService>();
+            services.AddScoped<QuizService>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

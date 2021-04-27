@@ -11,6 +11,6 @@ namespace PAWDataAcess.Abstractions
         new Quiz GetById(Guid quizId);
 
         bool RemoveQuiz(Guid quizId);
-        Quiz UpdateQuiz(Guid quizId);
+        //Quiz UpdateQuiz(Guid quizId);
     }
 }

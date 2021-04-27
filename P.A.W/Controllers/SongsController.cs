@@ -60,7 +60,7 @@ namespace P.A.W.Controllers
             }
             var name = file.FileName.ToString();
             string[] file_name = name.Split('_', '.');
-            songService.CreateNewSong(file_name[1], "Genre", path, file_name[0]);
+            songService.CreateNewSong(file_name[0], "Genre", path, file_name[1]);
 
             return RedirectToAction("Index");
         }

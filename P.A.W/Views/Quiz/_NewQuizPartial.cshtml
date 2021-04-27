@@ -1,0 +1,28 @@
+﻿@using PAW.Model
+@model Song
+
+
+<body>
+
+    <div class="form-control">
+
+        <div class="col-md-12">
+
+            <div class="col-md-3">
+
+                Song Name:
+
+            </div>
+
+            <div class="col-md-3">
+
+                <select asp-for="Id" asp-items="@(new SelectList(ViewBag.message,"Id","Title"))"></select>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</body>

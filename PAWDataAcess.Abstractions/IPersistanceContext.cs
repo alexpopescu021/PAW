@@ -7,6 +7,7 @@ namespace PAWDataAcess.Abstractions
     public interface IPersistanceContext
     {
         ISongRepository SongRepository { get; }
+        IQuizRepository QuizRepository { get; }
         void SaveChanges();
     }
 }

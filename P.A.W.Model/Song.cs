@@ -6,9 +6,9 @@ namespace PAW.Model
     public class Song : DataEntity
     {
         
-        public string Title { get; protected set; }
+        public string Title { get;  set; }
         public string Path { get; protected set; }
-        public string Artist { get; protected set; }
+        public string Artist { get;  set; }
         public string Genre { get; protected set; }
 
         public static Song Create(string artist, string genre, string path, string title)

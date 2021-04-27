@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PAW.ViewModels.Quizes
+namespace PAW.ViewModels
 {
     public class QuizListViewModel
     {

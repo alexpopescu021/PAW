@@ -56,41 +56,42 @@
 
         @foreach (var song in Model.SongViews)
         {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => song.Artist)</td>
-                <td>@Html.DisplayFor(modelItem => song.Title)</td>
-                <td>@Html.DisplayFor(modelItem => song.Genre)</td>
-                <td>
-                    <div class="d-flex justify-content-around">
-                        <button class="btn btn-outline-secondary" onclick="myFunction('@song.Id');" /><i id="icon" class="fa fa-star stroke-transparent"></i>
-                    </div>
+        <tr>
+            <td>@Html.DisplayFor(modelItem => song.Title)</td>
+            <td>@Html.DisplayFor(modelItem => song.Artist)</td>
 
-                </td>
+            <td>@Html.DisplayFor(modelItem => song.Genre)</td>
+            <td>
+                <div class="d-flex justify-content-around">
+                    <button class="btn btn-outline-secondary" onclick="myFunction('@song.Id');" /><i id="icon" class="fa fa-star stroke-transparent"></i>
+                </div>
+
+            </td>
 
 
-                <td>
+            <td>
 
-                    <audio controls="controls">
-                        
-                        <source src="@song.Path" type="audio/mpeg" />
+                <audio controls="controls">
 
-                    </audio>
+                    <source src="@song.Path" type="audio/mpeg" />
 
-                </td>
+                </audio>
 
-                <td>
+            </td>
 
-                    <div class="d-flex justify-content-around">
+            <td>
 
-                        <a name="ID" id="@song.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal" data-target="#editSongModal" onclick="LoadEditSongView('@song.Id');"><i class="material-icons fa fa-edit"></i></a>
+                <div class="d-flex justify-content-around">
 
-                        <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
-                                onclick="LoadRemoveSongView('@song.Id');" data-target="#removeModal">
-                            <i class="material-icons fa fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
+                    <a name="ID" id="@song.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal" data-target="#editSongModal" onclick="LoadEditSongView('@song.Id');"><i class="material-icons fa fa-edit"></i></a>
+
+                    <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
+                            onclick="LoadRemoveSongView('@song.Id');" data-target="#removeModal">
+                        <i class="material-icons fa fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
         }
     </tbody>
 
