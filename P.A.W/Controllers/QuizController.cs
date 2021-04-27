@@ -23,21 +23,48 @@ namespace P.A.W.Controllers
         public IActionResult Index()
         {
 
-            var quiz = new NewQuizViewModel()
-            {
-                SongList = songService.GetAllSongs().ToList()
-            };
-
-            var songs = songService.GetAllSongs();
-            List<Song> songList = new List<Song>();
-
-            songList = songs.ToList();
-
-            songList.Insert(0, new Song { Id = new Guid(), Title = "select song" });
-            ViewBag.message = songList;
+            
             return View();
         }
 
-        
+
+
+        [HttpGet]
+        public IActionResult CreateQuiz()
+        {
+            NewQuizViewModel quiz = new NewQuizViewModel()
+            {
+                SongList = GetSongList()
+            };
+
+            
+            return PartialView("_NewQuizPartial", quiz);
+        }
+
+        [HttpPost]
+        public IActionResult CreateQuiz([FromForm]NewQuizViewModel quizData)
+        {
+            var song = songService.GetSongById(quizData.SongId);
+            quizService.CreateNewQuiz(song, quizData.Answer1, quizData.Answer2, quizData.RightAnswer);
+            return RedirectToAction("Index");
+
+        }
+
+        private List<SelectListItem> GetSongList()
+        {
+            var songs = songService.GetAllSongs();
+            List<SelectListItem> songNames = new List<SelectListItem>();
+
+            foreach (var song in songs)
+            {
+                var text = song.Title;
+                songNames.Add(new SelectListItem(text, song.Id.ToString()));
+            }
+            return songNames;
+        }
+
+
+
+
     }
 }

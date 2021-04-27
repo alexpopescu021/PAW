@@ -28,7 +28,7 @@ namespace PAW.ViewModels
         public string RightAnswer { get; set; }
 
 
-        public List<Song> SongList { get; set; }
+        public List<SelectListItem> SongList { get; set; }
 
     }
 }

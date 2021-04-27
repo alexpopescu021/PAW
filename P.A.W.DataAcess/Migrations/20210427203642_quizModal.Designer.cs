@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PAW.DataAcess;
 
 namespace PAWDataAcess.Migrations
 {
     [DbContext(typeof(PAWDbContext))]
-    partial class PAWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210427203642_quizModal")]
+    partial class quizModal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

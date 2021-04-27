@@ -1,5 +1,4 @@
-﻿@using PAW.Model
-@model Song
+﻿@using PAW.ViewModels
 <style>
     .btn-info {
         height: 200px;
@@ -20,9 +19,8 @@
 </style>
 
 <div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
-    <button class="btn-car" data-toggle="modal" data-target="#newTrailerModal">
-        <i class="fa fa-question"></i>Add Quiz
-    </button>
+    <button class="btn-secondary" onclick="LoadNewQuizView()" data-toggle="modal" data-target="#newQuizModal">New Quiz <i class="fa fa-question"></i></button>
+
 </div>
 
 @*@foreach (var quiz in Model.QuizViews)
@@ -42,37 +40,38 @@
 
 
 
-<form id="newTrailerForm" asp-controller="Quiz" asp-action="CreateQuiz"
+<form id="newQuizForm" asp-controller="Quiz" asp-action="CreateQuiz"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
-      data-ajax-complete="modalFormComplete('#newTrailerModal')"
-      data-ajax-update="#editOrderBody">
+      data-ajax-complete="modalFormComplete('#newQuizModal')"
+      data-ajax-update="#newQuizBody">
 
     @Html.AntiForgeryToken()
 
-    <div class="modal" id="newTrailerModal" tabindex="-1" role="dialog" aria-labelledby="newTrailerModalLabel" aria-hidden="true">
+    <div class="modal" id="newQuizModal" tabindex="-1" role="dialog" aria-labelledby="newQuizModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold" id="newTrailerModalLabel">New Quiz</h5>
+                    <h5 class="modal-title font-weight-bold" id="newQuizModalLabel">New Quiz</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="editOrderBody" class="modal-body" style="text-align:center">
-                    <select asp-for="Id" asp-items="@(new SelectList(ViewBag.message,"Id","Title"))" style="margin:10px"></select>
-                    <br />
-                    <input placeholder="Answer1" style="margin:10px"/>
-                    <br />
-                    <input placeholder="Answer2" style="margin:10px"/>
-                    <br />
-                    <input placeholder="Right Answer" style="margin:10px"/>
+                <div id="newQuizBody" class="modal-body" style="text-align:center">
+                    <partial name="_NewQuizPartial" model="new NewQuizViewModel()" />
+                    @*<select asp-for="Id" asp-items="@(new SelectList(ViewBag.message,"Id","Title"))" style="margin:10px"></select>
+        <br />
+        <input placeholder="Answer1" style="margin:10px"/>
+        <br />
+        <input placeholder="Answer2" style="margin:10px"/>
+        <br />
+        <input placeholder="Right Answer" style="margin:10px"/>*@
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                    <button id="btnSave" class="btn btn-success" type="submit" onclick="CloseModal('#newTrailerModal')"> Confirm </button>
+                    <button id="btnSave" class="btn btn-success" type="submit" onclick="CloseModal('#newQuizModal')"> Confirm </button>
                 </div>
             </div>
         </div>
@@ -157,5 +156,10 @@
         function modalFormComplete(modalName) {
             $(modalName).modal("hide");
             loadTable();
+        }
+
+        function LoadNewQuizView() {
+            $('#newOrderDialog').removeClass("modal-custom-lg").addClass("modal-custom");
+            loadServerPartialView("#newQuizBody", '@Url.Action("CreateQuiz", "Quiz")');
         }
     </script>

@@ -1,28 +1,38 @@
-﻿@using PAW.Model
-@model Song
+﻿@using PAW.ViewModels
+@model NewQuizViewModel
 
 
 <body>
 
-    <div class="form-control">
+    <div class="form-group text-center">
+        <label asp-for="SongId"></label>
+        <div class="row ml-2 mr-2 d-flex justify-content-center modal-select-width">
 
-        <div class="col-md-12">
-
-            <div class="col-md-3">
-
-                Song Name:
-
-            </div>
-
-            <div class="col-md-3">
-
-                <select asp-for="Id" asp-items="@(new SelectList(ViewBag.message,"Id","Title"))"></select>
-
-            </div>
-
-
+            <select class="select-custom form-control" asp-for="SongId" asp-items="@Model.SongList"
+                    onchange="LoadDropdown('#SenderId')">
+            </select>
         </div>
-
+        <span asp-validation-for="SongId" class="text-danger"></span>
     </div>
+
+    <div class="form-group">
+        <label asp-for="Answer1"></label>
+        <input asp-for="Answer1" type="text" class="form-control" />
+        <span asp-validation-for="Answer1" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Answer2"></label>
+        <input asp-for="Answer2" type="text" class="form-control" />
+        <span asp-validation-for="Answer2" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RightAnswer"></label>
+        <input asp-for="RightAnswer" type="text" class="form-control" />
+        <span asp-validation-for="RightAnswer" class="text-danger"></span>
+    </div>
+
+
 
 </body>
