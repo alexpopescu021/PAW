@@ -47,7 +47,7 @@
             <th width="90">Song Name</th>
             <th width="40">Singer</th>
             <th width="30">Genre</th>
-            <th width="10">Favourite</th>
+           
             <th width="50">Player</th>
             <th width="40">Edit / Delete</th>
         </tr>
@@ -61,12 +61,7 @@
             <td>@Html.DisplayFor(modelItem => song.Artist)</td>
 
             <td>@Html.DisplayFor(modelItem => song.Genre)</td>
-            <td>
-                <div class="d-flex justify-content-around">
-                    <button class="btn btn-outline-secondary" onclick="myFunction('@song.Id');" /><i id="icon" class="fa fa-star stroke-transparent"></i>
-                </div>
-
-            </td>
+            
 
 
             <td>
