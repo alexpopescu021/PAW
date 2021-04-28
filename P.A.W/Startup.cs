@@ -42,7 +42,7 @@ namespace P.A.W
 
 
             services.AddDbContext<PAWDbContext>(options => 
-                options.UseSqlServer(
+                options.UseLazyLoadingProxies().UseSqlServer(
                         Configuration.GetConnectionString("PAWConnection")));
 
             services.AddControllersWithViews();

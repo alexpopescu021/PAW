@@ -1,0 +1,37 @@
+﻿@using PAW.ViewModels
+@model QuizListViewModel
+<table id="Quiz">
+	<tr>
+		<td>
+			@foreach (var quiz in Model.QuizViews)
+			{
+				<div>
+					<div class="d-flex justify-content-around">
+						<audio controls="controls">
+							<source src="@quiz.Song.Path" type="audio/mpeg" />
+						</audio>
+					</div>
+					<p>
+						<label><input type="radio" name="gender" value="T">@quiz.Answer1</label>
+						<br />
+						<label><input type="radio" name="gender" value="F">@quiz.Answer2</label>
+					</p>
+					<p class="d-flex justify-content-around"><input type="button" value="Get Value"></p>
+				</div>
+			}
+		</td>
+	</tr>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $("input[type='button']").click(function () {
+            var radioValue = $("input[name='gender']:checked").val();
+            if (radioValue) {
+                if (radioValue == "T")		
+                    alert("Correct!");
+                else alert("Try Again!");
+            }
+        });
+    });
+</script>

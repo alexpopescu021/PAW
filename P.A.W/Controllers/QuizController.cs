@@ -22,12 +22,28 @@ namespace P.A.W.Controllers
         }
         public IActionResult Index()
         {
-
-            
             return View();
         }
 
+        public IActionResult _Quiz()
+        {
+            QuizListViewModel quizViewModel = null;
+            try
+            {
+                quizViewModel = new QuizListViewModel()
+                {
+                    QuizViews = quizService.GetAllQuizzes()
+                };
+                
 
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return PartialView("_Quiz",quizViewModel);
+        }
 
         [HttpGet]
         public IActionResult CreateQuiz()

@@ -1,4 +1,8 @@
 ﻿@using PAW.ViewModels
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
+
 <style>
     .btn-info {
         height: 200px;
@@ -24,21 +28,21 @@
 </div>
 
 @*@foreach (var quiz in Model.QuizViews)
-{ 
-<tr>
-    <td>
-        <audio controls="controls">
-            <source src="@quiz." type="audio/mpeg" />
-        </audio>
-    </td>
-    <td>@Html.DisplayFor(modelItem => quiz.Answer1)</td>
-    <td>@Html.DisplayFor(modelItem => quiz.Answer2)</td>
-</tr>
+    {
+    <tr>
+        <td>
+            <audio controls="controls">
+                <source src="@quiz." type="audio/mpeg" />
+            </audio>
+        </td>
+        <td>@Html.DisplayFor(modelItem => quiz.Answer1)</td>
+        <td>@Html.DisplayFor(modelItem => quiz.Answer2)</td>
+    </tr>
 
 
-}*@
+    }*@
 
-
+<div id="QuizContainer"></div>
 
 <form id="newQuizForm" asp-controller="Quiz" asp-action="CreateQuiz"
       data-ajax="true"
@@ -61,12 +65,12 @@
                 <div id="newQuizBody" class="modal-body" style="text-align:center">
                     <partial name="_NewQuizPartial" model="new NewQuizViewModel()" />
                     @*<select asp-for="Id" asp-items="@(new SelectList(ViewBag.message,"Id","Title"))" style="margin:10px"></select>
-        <br />
-        <input placeholder="Answer1" style="margin:10px"/>
-        <br />
-        <input placeholder="Answer2" style="margin:10px"/>
-        <br />
-        <input placeholder="Right Answer" style="margin:10px"/>*@
+                        <br />
+                        <input placeholder="Answer1" style="margin:10px"/>
+                        <br />
+                        <input placeholder="Answer2" style="margin:10px"/>
+                        <br />
+                        <input placeholder="Right Answer" style="margin:10px"/>*@
                 </div>
 
                 <div class="modal-footer">
@@ -78,18 +82,6 @@
     </div>
 </form>
 
-<div class="row">
-<div class="column">
-    <button class="fa fa-headphones btn-info fa-6x" data-toggle="modal" data-target="#exampleModal">
-    </button>
-    <div class="desc ">Quiz 1</div>
-</div>
-<div class="column">
-    <button class="fa fa-headphones btn-info fa-6x" data-toggle="modal" data-target="#exampleModal">
-    </button>
-    <div class="desc ">Quiz 2</div>
-    </div>
-</div>
 
 
 
@@ -100,47 +92,60 @@
 
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-around">
+                    <audio controls="controls">
+                        <source src="../Assets/RickAstley_NeverGonnaGiveYouUp.mp3" type="audio/mpeg" />
+                    </audio>
                 </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-around">
-                        <audio controls="controls">
-                            <source src="../Assets/RickAstley_NeverGonnaGiveYouUp.mp3" type="audio/mpeg" />
-                        </audio>
-                    </div>
-                    <p>
-                        <label><input type="radio" name="gender" value="T">Never Gonna Give You Up</label>
-                        <label><input type="radio" name="gender" value="F">Wrong Answer</label>
-                    </p>
-                    <p class="d-flex justify-content-around"><input type="button" value="Get Value"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+                <p>
+                    <label><input type="radio" name="gender" value="T">Never Gonna Give You Up</label>
+                    <label><input type="radio" name="gender" value="F">Wrong Answer</label>
+                </p>
+                <p class="d-flex justify-content-around"><input type="button" value="Get Value"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
 
 
-  
 
-  
 
-    <script>
+@section scripts{
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            loadTable();
+        });
         $(function () {
             $('#modal').modal('toggle');
         });
 
+		function loadTable(modalName) {
+			loadServerPartialView("#QuizContainer", "/Quiz/_Quiz").done(function () {
+				$('#Quiz').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+			});
+			$(modalName).modal('hide');
+		}
+		$(function () {
+			$('#modal').modal('toggle');
+		});
 
         $(document).ready(function () {
             $("input[type='button']").click(function () {
@@ -163,3 +168,6 @@
             loadServerPartialView("#newQuizBody", '@Url.Action("CreateQuiz", "Quiz")');
         }
     </script>
+
+}
+

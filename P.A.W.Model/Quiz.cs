@@ -6,7 +6,7 @@ namespace PAW.Model
 {
     public class Quiz : DataEntity
     {
-        public Song Song { get; protected set; }
+        public virtual Song Song { get; set; }
 
         public string Answer1 { get; protected set; }
         public string Answer2 { get; protected set; }
