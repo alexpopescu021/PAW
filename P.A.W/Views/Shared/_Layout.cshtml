@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -15,7 +18,7 @@
         <header>
             <nav style="background-color: transparent" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-menu box-shadow mb-3">
                 <div class="container-fluid">
-                    <img src="~/css/Icon.png" alt=""  style="width: 40px; height: 50px;"/>
+                    <img src="~/css/Icon.png" alt="" style="width: 40px; height: 50px;" />
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">P.A.W</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +31,8 @@
                                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 
                             </li>
+                            @if(SignInManager.IsSignedIn(User))
+                            {
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Songs" asp-action="Index">
                                     <i class="fas fa-music"></i>
@@ -46,6 +51,7 @@
                                     Quiz
                                 </a>
                             </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>

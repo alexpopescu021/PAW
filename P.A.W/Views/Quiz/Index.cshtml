@@ -21,115 +21,116 @@
         background-color: dimgrey;
     }
 </style>
+@if (User.IsInRole("Admin"))
+{
+    <div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
+        <button class="btn-secondary" onclick="LoadNewQuizView()" data-toggle="modal" data-target="#newQuizModal">New Quiz <i class="fa fa-question"></i></button>
 
-<div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
-    <button class="btn-secondary" onclick="LoadNewQuizView()" data-toggle="modal" data-target="#newQuizModal">New Quiz <i class="fa fa-question"></i></button>
-
-</div>
-
-@*@foreach (var quiz in Model.QuizViews)
-    {
-    <tr>
-        <td>
-            <audio controls="controls">
-                <source src="@quiz." type="audio/mpeg" />
-            </audio>
-        </td>
-        <td>@Html.DisplayFor(modelItem => quiz.Answer1)</td>
-        <td>@Html.DisplayFor(modelItem => quiz.Answer2)</td>
-    </tr>
+    </div>
+}
+    @*@foreach (var quiz in Model.QuizViews)
+        {
+        <tr>
+            <td>
+                <audio controls="controls">
+                    <source src="@quiz." type="audio/mpeg" />
+                </audio>
+            </td>
+            <td>@Html.DisplayFor(modelItem => quiz.Answer1)</td>
+            <td>@Html.DisplayFor(modelItem => quiz.Answer2)</td>
+        </tr>
 
 
-    }*@
+        }*@
 
-<div id="QuizContainer"></div>
+    <div id="QuizContainer"></div>
 
-<form id="newQuizForm" asp-controller="Quiz" asp-action="CreateQuiz"
-      data-ajax="true"
-      data-ajax-method="POST"
-      data-ajax-mode="replace"
-      data-ajax-complete="modalFormComplete('#newQuizModal')"
-      data-ajax-update="#newQuizBody">
+    <form id="newQuizForm" asp-controller="Quiz" asp-action="CreateQuiz"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-mode="replace"
+          data-ajax-complete="modalFormComplete('#newQuizModal')"
+          data-ajax-update="#newQuizBody">
 
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <div class="modal" id="newQuizModal" tabindex="-1" role="dialog" aria-labelledby="newQuizModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal" id="newQuizModal" tabindex="-1" role="dialog" aria-labelledby="newQuizModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-bold" id="newQuizModalLabel">New Quiz</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="newQuizBody" class="modal-body" style="text-align:center">
+                        <partial name="_NewQuizPartial" model="new NewQuizViewModel()" />
+                        @*<select asp-for="Id" asp-items="@(new SelectList(ViewBag.message,"Id","Title"))" style="margin:10px"></select>
+                            <br />
+                            <input placeholder="Answer1" style="margin:10px"/>
+                            <br />
+                            <input placeholder="Answer2" style="margin:10px"/>
+                            <br />
+                            <input placeholder="Right Answer" style="margin:10px"/>*@
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
+                        <button id="btnSave" class="btn btn-success" type="submit" onclick="CloseModal('#newQuizModal')"> Confirm </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold" id="newQuizModalLabel">New Quiz</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="newQuizBody" class="modal-body" style="text-align:center">
-                    <partial name="_NewQuizPartial" model="new NewQuizViewModel()" />
-                    @*<select asp-for="Id" asp-items="@(new SelectList(ViewBag.message,"Id","Title"))" style="margin:10px"></select>
-                        <br />
-                        <input placeholder="Answer1" style="margin:10px"/>
-                        <br />
-                        <input placeholder="Answer2" style="margin:10px"/>
-                        <br />
-                        <input placeholder="Right Answer" style="margin:10px"/>*@
+                <div class="modal-body">
+                    <div class="d-flex justify-content-around">
+                        <audio controls="controls">
+                            <source src="../Assets/RickAstley_NeverGonnaGiveYouUp.mp3" type="audio/mpeg" />
+                        </audio>
+                    </div>
+                    <p>
+                        <label><input type="radio" name="gender" value="T">Never Gonna Give You Up</label>
+                        <label><input type="radio" name="gender" value="F">Wrong Answer</label>
+                    </p>
+                    <p class="d-flex justify-content-around"><input type="button" value="Get Value"></p>
                 </div>
-
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                    <button id="btnSave" class="btn btn-success" type="submit" onclick="CloseModal('#newQuizModal')"> Confirm </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-</form>
 
 
 
 
 
+    @section scripts{
+        <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
 
-
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="d-flex justify-content-around">
-                    <audio controls="controls">
-                        <source src="../Assets/RickAstley_NeverGonnaGiveYouUp.mp3" type="audio/mpeg" />
-                    </audio>
-                </div>
-                <p>
-                    <label><input type="radio" name="gender" value="T">Never Gonna Give You Up</label>
-                    <label><input type="radio" name="gender" value="F">Wrong Answer</label>
-                </p>
-                <p class="d-flex justify-content-around"><input type="button" value="Get Value"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-@section scripts{
-    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
-
-    <script type="text/javascript">
+        <script type="text/javascript">
         $(document).ready(function () {
             loadTable();
         });
@@ -167,7 +168,7 @@
             $('#newOrderDialog').removeClass("modal-custom-lg").addClass("modal-custom");
             loadServerPartialView("#newQuizBody", '@Url.Action("CreateQuiz", "Quiz")');
         }
-    </script>
+        </script>
 
-}
+    }
 

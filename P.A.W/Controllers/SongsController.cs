@@ -44,6 +44,26 @@ namespace P.A.W.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult SongsTableGenre(string genre)
+        {
+            SongListViewModel songViewModel = null;
+            try
+            {
+                songViewModel = new SongListViewModel()
+                {
+                    SongViews = songService.GetSongsByGenre(genre)
+                };
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return View("_SongsTable", songViewModel);
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
