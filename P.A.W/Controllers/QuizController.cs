@@ -79,6 +79,20 @@ namespace P.A.W.Controllers
             return songNames;
         }
 
+        [HttpPost]
+        public IActionResult YourAction()
+        {
+            string answers = null;
+            var YourRadioButton = Request.Form["gender"];
+            answers = YourRadioButton.ToString();
+            var checker = answers.Split('/');
+            if (checker[0].Equals(checker[1]))
+            {
+                ViewBag.Answer = "Correct!";
+            }
+            else ViewBag.Answer = "Wrong, try again!";
+            return View("Index");
+        }
 
 
 
