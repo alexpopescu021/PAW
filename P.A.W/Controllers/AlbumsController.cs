@@ -1,4 +1,5 @@
 ﻿using AppLogic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PAW.ViewModels;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace PAW.Controllers
 {
+    [Authorize]
     public class AlbumsController : Controller
     {
         private readonly SongService songService;

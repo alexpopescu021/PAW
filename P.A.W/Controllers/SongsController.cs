@@ -1,4 +1,5 @@
 ﻿using AppLogic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,10 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace P.A.W.Controllers
 {
+    [Authorize]
     public class SongsController : Controller
     {
-
+        
         private readonly SongService songService;
         public SongsController(SongService songService)
         {

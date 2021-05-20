@@ -1,4 +1,5 @@
 ﻿using AppLogic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PAW.Model;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace P.A.W.Controllers
 {
+    [Authorize]
     public class QuizController : Controller
     {
         private readonly QuizService quizService;
