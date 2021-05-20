@@ -1,0 +1,105 @@
+﻿@using PAW.ViewModels
+@model SongListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+
+
+    .stroke-transparent { /* nu folosesc fa-premium  */
+        -webkit-text-stroke: 2px white;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: transparent;
+        color: white;
+    }
+
+    .fa-star {
+        color: white;
+    }
+
+    td:not(:last-child):hover {
+        background-color: mediumpurple;
+    }
+
+    table.table-hover tbody tr:hover {
+        background-color: grey;
+    }
+
+    .btn:hover {
+        background-color: grey;
+    }
+
+
+
+    .like {
+        margin-right: 10px;
+    }
+</style>
+<br />
+<table id="Songs" class="table table-bordered dt-responsive nowrap table-hover " style="color:white" width="100%">
+    <thead>
+        <tr>
+            <th width="90">Song Name</th>
+            <th width="40">Singer</th>
+            <th width="30">Genre</th>
+
+            <th width="50">Player</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th width="40">Edit / Delete</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var song in Model.SongViews)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => song.Title)</td>
+                <td>@Html.DisplayFor(modelItem => song.Artist)</td>
+
+                <td>@Html.DisplayFor(modelItem => song.Genre)</td>
+
+
+
+                <td>
+
+                    <audio controls="controls">
+
+                        <source src="../@song.Path" type="audio/mpeg" />
+
+                    </audio>
+
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+
+                        <div class="d-flex justify-content-around">
+
+                            <a name="ID" id="@song.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal" data-target="#editSongModal" onclick="LoadEditSongView('@song.Id');"><i class="material-icons fa fa-edit"></i></a>
+
+                            <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
+                                    onclick="LoadRemoveSongView('@song.Id');" data-target="#removeModal">
+                                <i class="material-icons fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+}
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<script>
+
+    function myFunction(Id) {
+        var element = document.getElementById("icon");
+        element.classList.toggle("stroke-transparent");
+    }
+</script>
