@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using PAW.ViewModels.Songs
+
+<table class=" table table-bordered dt-responsive nowrap" 
+ style="color: white;
+        text-align: center;
+        table-layout: fixed;
+        width: 50%;
+        margin-left:auto;
+        margin-right: auto;
+">
+
+    <thead>
+        <tr>
+            <th width="30">Product</th>
+ 
+           
+            <th width="20">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.products != null)
+        {
+            @foreach (var product in ViewBag.products)
+            {
+                <tr>
+                    <td> @product.Title by @product.Artist</td>
+
+                 
+                    <td>
+                        <a class="btn button btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
+                                onclick="LoadRemoveSongView('@product.Id');" data-target="#removeModal">
+                            <i class="material-icons fa fa-trash"></i>
+                        </a>
+
+                        <a class="btn button mr-1 ml-1" title="Buy" asp-controller="Songs" asp-action="AddToCart" asp-route-id="@product.Id" style="background-color:whitesmoke">
+                            <i class="material-icons fa fa-shopping-cart"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+
+</table>
+
+@ViewBag.total
+
+
+@section scripts{
+    <script>
+     function LoadRemoveSongView(Id) {
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Wishlist")'+"/" + Id);
+        }
+
+       
+
+        $(function () {
+            $('#modal').modal('toggle');
+        });
+
+    </script>
+
+}
+
+
+<form method="post" asp-controller="Wishlist" asp-action="Remove"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="loadTable('#removeModal')"
+      data-ajax-update="#removeBody">
+
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center" role="document">
+            <div class="modal-content" style="max-width: 60%">
+                <div class="modal-body" id="removeBody">
+                    <partial name="_RemoveSongPartial" model="new RemoveSongViewModel()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

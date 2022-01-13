@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using PAW.ViewModels.Songs
+
+<table class="table table-bordered dt-responsive text-nowrap justify-content-center" style="color:white;text-align:center" width="80%">
+    <thead>
+        <tr>
+            <th width="60">Product</th>
+            <th width="10">No.Items</th>
+            <th width="30">Price</th>
+            <th width="30">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var product in ViewBag.products)
+        {
+        <tr>
+            <td> @product.Title by @product.Artist</td>
+            <td>
+                <div class="row">
+                    <a href="@Url.Action("Subtract", "Cart", new { id = product.Id })" class=" btn" style="color:white; height:40px; font-size:large" >-</a>
+
+                    @if (product.NumberInCart != 0)
+                    {
+                        <div id="number" value="0" class=”block”> @product.NumberInCart </div>
+                    }
+                    <a href="@Url.Action("Add", "Cart", new { id = product.Id })" class=" btn" style="color:white; height:40px; font-size:large" >+</a>
+                </div>
+
+               </td>
+                    <td>@(product.Price*product.NumberInCart)</td>
+                    <td>
+                        <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
+                                onclick="LoadRemoveSongView('@product.Id');" data-target="#removeModal">
+                            <i class="material-icons fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+        }
+    </tbody>
+
+</table>
+<div style="text-align: right">
+    <div style="font-size:40px">Total: @ViewBag.total</div>
+    <div id="paypal-button-container"></div>
+</div>
+
+@section scripts{
+    <script src="https://www.paypal.com/sdk/js?client-id=AXITUnQtwNbMR4_qlCodTH4ymx6e7vrGro0_UgyuWJ3lBgmoj_IkehdeCoyXS_5MNg8k2GXXh2zpYN-h&currency=EUR">
+
+    </script>
+    <script>
+     function LoadRemoveSongView(Id) {
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Cart")'+"/" + Id);
+        }
+
+
+
+        $(function () {
+            $('#modal').modal('toggle');
+        });
+
+
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [
+                        {
+                            amount: {
+                                currency_code: "EUR",
+                                value: "@ViewBag.total"
+                            }
+                        }
+                    ]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    alert('Congratulations! payment success');
+                    window.location.href = "/Cart/Finish";
+                    console.log(details);
+                    console.log(details.id);  // order id
+                    console.log(details.status);  // 'COMPLETED'
+                   
+                    // send ajax request to update the db
+                });
+            },
+            onCancel: function (data) {
+                alert('Payment cancelled');
+            },
+            onError: function (err) {
+                alert(err);
+            }
+        }).render('#paypal-button-container');
+
+    </script>
+
+}
+
+
+<form method="post" asp-controller="Cart" asp-action="Remove"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="loadTable('#removeModal')"
+      data-ajax-update="#removeBody">
+
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center" role="document">
+            <div class="modal-content" style="max-width: 60%">
+                <div class="modal-body" id="removeBody">
+                    <partial name="_RemoveSongPartial" model="new RemoveSongViewModel()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<style>
+    .row {
+        width: 30%;
+        margin: 5px auto;
+        align-content: center;
+        
+    }
+
+    
+</style>

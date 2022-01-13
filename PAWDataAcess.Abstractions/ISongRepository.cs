@@ -11,7 +11,9 @@ namespace PAWDataAcess.Abstractions
         new Song GetById(Guid songId);
         new IEnumerable<Song> GetAll();
         bool RemoveSong(Guid songId);
-        Song UpdateSong(Guid songId, string title, string genre, string artist);
+        Song UpdateSong(Guid songId, string title, string genre, string artist, decimal price, string path);
+
+        Song UpdateSong(Guid songId, string title, string genre, string artist, decimal price);
 
         IEnumerable<Song> GetSongsByGenre(string genre);
     }

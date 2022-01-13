@@ -13,5 +13,10 @@ namespace PAW.DataAcess
         }
         public DbSet<Song> Songs { get; set; }
         public DbSet<Quiz> Quizzes { get; set; }
+
+        public DbSet<Wishlist> Wishlist { get; set; }
+
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<History> Histories { get; set; }
     }
 }

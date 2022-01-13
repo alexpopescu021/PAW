@@ -42,15 +42,23 @@ namespace PAWDataAcess.Repos
             return dbContext.Songs.Where(song => song.Genre == genre).AsEnumerable();
         }
 
-        public Song UpdateSong(Guid songId, string title, string genre, string artist)
+        public Song UpdateSong(Guid songId, string title, string genre, string artist, decimal price, string path)
         {
             var song = dbContext.Songs.Find(songId);
-            song.Update(artist, genre, title);
+            song.Update(artist, genre, title, price,path);
             dbContext.Update(song);
             dbContext.SaveChanges();
             return song;
         }
 
+        public Song UpdateSong(Guid songId, string title, string genre, string artist, decimal price)
+        {
+            var song = dbContext.Songs.Find(songId);
+            song.Update(artist, genre, title, price);
+            dbContext.Update(song);
+            dbContext.SaveChanges();
+            return song;
+        }
         public bool RemoveSong(Guid songId)
         {
             var entityToRemove = GetById(songId);

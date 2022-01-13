@@ -1,0 +1,20 @@
+
+{
+    "region" : "eu-central-1",
+    "configuration" : "Debug",
+    "framework"     : "netcoreapp3.1",
+    "self-contained" : false,
+    "application"    : "PAW",
+    "environment"    : "PAW-dev",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-892b7dfc\";\"aws:ec2:vpc,Subnets\"=\"subnet-007a356a\"",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.2.1 running .NET Core",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "paw-dev",
+    "instance-type"        : "t3a.medium",
+    "key-pair"             : "",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx"
+}

@@ -27,6 +27,10 @@ a {
   color: #0366d6;
 }
 
+a:hover {
+    background-color: #38a;
+}
+
 .background {
     height: 100vh;
     width: 100%;

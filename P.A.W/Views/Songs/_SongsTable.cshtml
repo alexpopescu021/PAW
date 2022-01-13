@@ -36,26 +36,31 @@
     }
 
 
-
     .like {
         margin-right: 10px;
     }
 </style>
 <br />
 @*Another page for favourites so that i dont have to reload the table?*@
-<table id="Songs" class="table table-bordered dt-responsive nowrap table-hover " style="color:white" width="100%">
+<table id="Songs" class="table table-bordered dt-responsive nowrap table-hover " style=" color: white;text-align: center;" width="100%">
     <thead>
         <tr>
             <th width="90">Song Name</th>
             <th width="40">Singer</th>
             <th width="30">Genre</th>
 
-            <th width="50">Player</th>
+            <th width="50">Picture</th>
             @if (User.IsInRole("Admin"))
             {
                 <th width="40">Edit / Delete</th>
             }
-            </tr>
+            <th width="30">Price</th>
+            @if (!User.IsInRole("Admin"))
+            {
+                <th width="30">Action</th>
+            }
+
+        </tr>
     </thead>
     <tbody>
 
@@ -70,12 +75,8 @@
 
 
             <td>
+                <img src="@song.Path" width="100" height="100" />
 
-                <audio controls="controls">
-
-                    <source src="@song.Path" type="audio/mpeg" />
-
-                </audio>
 
             </td>
             @if (User.IsInRole("Admin"))
@@ -91,12 +92,31 @@
                             <i class="material-icons fa fa-trash"></i>
                         </button>
                     </div>
-                </td>}
-            </tr>
-        }
-    </tbody>
+                </td>
+            }
 
-</table>
+            <td>@Html.DisplayFor(modelItem => song.Price)</td>
+
+
+            @if (!User.IsInRole("Admin"))
+            {
+                <td>
+                    <div class="d-flex justify-content-around">
+                        <a class="btn button mr-1 ml-1" title="Buy" asp-controller="Songs" asp-action="AddToCart" asp-route-id="@song.Id" style="background-color:whitesmoke">
+                            <i class="material-icons fa fa-shopping-cart"></i>
+                        </a>
+
+                        <a class="btn button mr-1 ml-1" title="Wishlist" asp-controller="Songs" asp-action="AddToWishlist" asp-route-id="@song.Id" style="background-color:whitesmoke">
+                            <i class="material-icons fa fa-star" style="color: black"></i>
+                        </a>
+                    </div>
+                </td>
+            }
+        </tr>
+        }
+        </tbody>
+
+    </table>
 
 <script>
 

@@ -41,9 +41,9 @@ namespace AppLogic
             return songRepository.GetAll();
         }
 
-        public Song CreateNewSong(string artist, string genre, string path, string title)
+        public Song CreateNewSong(string artist, string genre, string title, decimal price, string path)
         {
-            var song = Song.Create(artist,  genre,  path,  title);
+            var song = Song.Create(artist,  genre,  title, price, path);
             song = songRepository.Add(song);
             persistanceContext.SaveChanges();
             
@@ -57,9 +57,26 @@ namespace AppLogic
             persistanceContext.SaveChanges();
         }
 
-        public void Update(Guid id, string artist, string genre, string title)
+        public void Update(Guid id, string artist, string genre, string title, decimal price, string path)
         {
-            songRepository.UpdateSong(id,title,genre,artist);
+            songRepository.UpdateSong(id,title,genre,artist, price, path);
+        }
+
+        public void Update(Guid id, string artist, string genre, string title, decimal price)
+        {
+            songRepository.UpdateSong(id, title, genre, artist, price);
+        }
+        public Song CreateNewSong(string title, string artist, string genre, decimal price)
+        {
+            var song = Song.Create(artist, genre, title, price);
+            song = songRepository.Add(song);
+            persistanceContext.SaveChanges();
+            return song;
+        }
+
+        public void AddToCart(Song song)
+        {
+            
         }
     }
 }

@@ -19,7 +19,7 @@
             <nav style="background-color: transparent" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-menu box-shadow mb-3">
                 <div class="container-fluid">
                     <img src="~/css/Icon.png" alt="" style="width: 40px; height: 50px;" />
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">P.A.W</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">C.E.</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -31,27 +31,39 @@
                                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 
                             </li>
-                            @if(SignInManager.IsSignedIn(User))
+                            @if (SignInManager.IsSignedIn(User))
                             {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Songs" asp-action="Index">
-                                    <i class="fas fa-music"></i>
-                                    Songs
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Songs" asp-action="Index">
+                                        <i class="fas fa-music"></i>
+                                        Albums
+                                    </a>
+                                </li>
+                                  <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Wishlist" asp-action="Index">
+                                    <i class="fas fa-star"></i>
+                                    Wishlist
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Albums" asp-action="Index">
-                                    <i class="fas fa-compact-disc"></i>
-                                    Genres
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Quiz" asp-action="Index">
+                              </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link text-light" asp-area="" asp-controller="History" asp-action="Index">
+                                          <i class="fas fa-history"></i>
+                                          History
+                                      </a>
+                                  </li>
+                               @*<li class="nav-item">
+                               <a class="nav-link text-light" asp-area="" asp-controller="Quiz" asp-action="Index">
                                     <i class="fa fa-question"></i>
                                     Quiz
                                 </a>
-                            </li>
-                            }
+                            </li>*@
+                            @if (!User.IsInRole("Admin"))
+                            {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Cart" asp-action="Index">Shopping Cart</a>
+                                    </li>
+                                    }
+                                }
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>

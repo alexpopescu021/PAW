@@ -1,3 +1,5 @@
+using Amazon.DynamoDBv2;
+using Amazon.S3;
 using AppLogic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +35,8 @@ namespace P.A.W
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -59,6 +63,8 @@ namespace P.A.W
             services.AddScoped<SongService>();
             services.AddScoped<QuizService>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

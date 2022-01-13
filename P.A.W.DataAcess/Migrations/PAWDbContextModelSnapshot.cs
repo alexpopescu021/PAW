@@ -19,6 +19,34 @@ namespace PAWDataAcess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("PAW.Model.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("PAW.Model.History", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Histories");
+                });
+
             modelBuilder.Entity("PAW.Model.Quiz", b =>
                 {
                     b.Property<Guid>("Id")
@@ -53,18 +81,50 @@ namespace PAWDataAcess.Migrations
                     b.Property<string>("Artist")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("CartId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Genre")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("HistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("NumberInCart")
+                        .HasColumnType("int");
 
                     b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("WishlistId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WishlistId");
+
                     b.ToTable("Songs");
+                });
+
+            modelBuilder.Entity("PAW.Model.Wishlist", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Wishlist");
                 });
 
             modelBuilder.Entity("PAW.Model.Quiz", b =>
@@ -72,6 +132,21 @@ namespace PAWDataAcess.Migrations
                     b.HasOne("PAW.Model.Song", "Song")
                         .WithMany()
                         .HasForeignKey("SongId");
+                });
+
+            modelBuilder.Entity("PAW.Model.Song", b =>
+                {
+                    b.HasOne("PAW.Model.Cart", null)
+                        .WithMany("Songs")
+                        .HasForeignKey("CartId");
+
+                    b.HasOne("PAW.Model.History", null)
+                        .WithMany("Songs")
+                        .HasForeignKey("HistoryId");
+
+                    b.HasOne("PAW.Model.Wishlist", null)
+                        .WithMany("Songs")
+                        .HasForeignKey("WishlistId");
                 });
 #pragma warning restore 612, 618
         }

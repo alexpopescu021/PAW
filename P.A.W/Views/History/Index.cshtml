@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using PAW.ViewModels.Songs
+
+<table class="table table-bordered dt-responsive text-nowrap justify-content-center" style="color:white;text-align:center" width="80%">
+    <thead>
+        <tr>
+            <th width="60">Product</th>
+            <th width="10">No.Items</th>
+            <th width="30">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var product in ViewBag.products)
+        {
+            <tr>
+                <td> @product.Title by @product.Artist</td>
+                <td>
+    
+                    <div id="number" value="0" class="d-inline-block"> @product.NumberInCart </div>
+                    
+                </td>
+                <td>@(product.Price*product.NumberInCart)</td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,6 +29,14 @@ namespace PAW.ViewModels.Songs
         [Required(ErrorMessage = "Artist is required.")]
         [Display(Name = "Artist")]
         public string Artist { get; set; }
-        
+
+        [Required(ErrorMessage = "Price is required.")]
+        [Display(Name = "Price")]
+        public decimal Price { get; set; }
+
+        [Required(ErrorMessage = "Picture is required.")]
+        [Display(Name = "Picture")]
+        public string file { get; set; }
+
     } 
 }

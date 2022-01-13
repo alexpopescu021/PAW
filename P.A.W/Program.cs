@@ -13,27 +13,7 @@ namespace P.A.W
 {
     public class Program
     {
-        public static void InitiateAdmin(IConfiguration configuration, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
-        {
-            //Configuration = configuration;
-            string name = configuration.GetSection("Admin").GetSection("UserName").Value;
-            string email = configuration.GetSection("Admin").GetSection("Email").Value;
-            string password = configuration.GetSection("Admin").GetSection("Password").Value;
-            IdentityUser admin = new IdentityUser
-            {
-                UserName = name,
-                Email = email
-            };
-            var adminExists = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
-            if (adminExists == null)
-            {
-                userManager.CreateAsync(admin, password).GetAwaiter().GetResult();
-                var role = new IdentityRole("Administrator");
-                roleManager.CreateAsync(role).GetAwaiter().GetResult();
-                userManager.AddToRoleAsync(admin, "Administrator").GetAwaiter().GetResult();
-            }
-           
-        }
+      
         public static void Main(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
@@ -43,7 +23,7 @@ namespace P.A.W
                 var roleManager = services.GetService<RoleManager<IdentityRole>>();
                 var userManager = services.GetService<UserManager<IdentityUser>>();
                 var configuration = services.GetService<IConfiguration>();
-                InitiateAdmin(configuration, userManager, roleManager);
+                
 
             }
 
