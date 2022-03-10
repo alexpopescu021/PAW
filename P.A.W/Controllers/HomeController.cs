@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
-
 using P.A.W.Models;
 using System;
 using System.IO;
-
 using System.Web;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +13,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Storage;
 using PAW.Model;
+using System.Net.Mail;
+using Newtonsoft.Json;
 
 namespace P.A.W.Controllers
 {
@@ -30,6 +29,7 @@ namespace P.A.W.Controllers
 
         public IActionResult Index()
         {
+         
             return View();
         }
 
@@ -70,5 +70,28 @@ namespace P.A.W.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Form()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SendMessage(IFormCollection fc)
+        {
+            MailMessage mail = new MailMessage(fc["email"].ToString(), "pepalon426@vapaka.com",
+                fc["subject"].ToString(), fc["message"].ToString());
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            var json = System.IO.File.ReadAllText("wwwroot/tsconfig1.json");
+            var credentials = JsonConvert.DeserializeObject<Account>(json);
+            client.Credentials = new System.Net.NetworkCredential(credentials.Email, credentials.Pass);
+            client.EnableSsl = true;
+            client.Send(mail);
+            return RedirectToAction("Index");
+        }
+
     }
+
+    
 }

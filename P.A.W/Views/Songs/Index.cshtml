@@ -12,17 +12,17 @@
 </style>
 @if (User.IsInRole("Admin"))
 {
-    <!--<form asp-controller="Songs" asp-action="UploadFile" method="post"
+    <form asp-controller="Songs" asp-action="UploadFile" method="post"
           enctype="multipart/form-data">
 
-        <input type="file" name="file" />-->
-        @*<button type="submit">Upload File</button>*@
-    <!--</form>-->
+        <input type="file" name="file" />
+        <button type="submit">Upload File</button>
+    </form>
 
 
-    <button class="btn-car" data-toggle="modal" data-target="#createSongModal">
+    @*<button class="btn-car" data-toggle="modal" data-target="#createSongModal">
         <i class="fa fa-music"></i>Add Song
-    </button>
+    </button>*@
 }
 
 <div id="songsTableContainer"></div>
@@ -34,6 +34,7 @@
 
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap3-typeahead.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -44,9 +45,8 @@
 
         function loadTable(modalName) {
             loadServerPartialView("#songsTableContainer", "/Songs/SongsTable").done(function () {
-                $('#Songs').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
-            $(modalName).modal('hide');
+           
         }
         $(function () {
             $('#modal').modal('toggle');

@@ -5,12 +5,12 @@
 }
 @using PAW.ViewModels.Songs
 
-<table class="table table-bordered dt-responsive text-nowrap justify-content-center" style="color:white;text-align:center" width="80%">
+<table class="table table-bordered dt-responsive text-nowrap justify-content-center" style="color:white;text-align:center">
     <thead>
         <tr>
             <th width="60">Product</th>
             <th width="10">No.Items</th>
-            <th width="30">Price</th>
+            <th width="40">Price</th>
             <th width="30">Actions</th>
         </tr>
     </thead>
@@ -21,14 +21,14 @@
         <tr>
             <td> @product.Title by @product.Artist</td>
             <td>
-                <div class="row">
-                    <a href="@Url.Action("Subtract", "Cart", new { id = product.Id })" class=" btn" style="color:white; height:40px; font-size:large" >-</a>
+                <div class="row" style="width:90px">
+                    <a href="@Url.Action("Subtract", "Cart", new { id = product.Id })" class=" btn" style="color:white; height:30px; font-size:large" >-</a>
 
                     @if (product.NumberInCart != 0)
                     {
                         <div id="number" value="0" class=”block”> @product.NumberInCart </div>
                     }
-                    <a href="@Url.Action("Add", "Cart", new { id = product.Id })" class=" btn" style="color:white; height:40px; font-size:large" >+</a>
+                    <a href="@Url.Action("Add", "Cart", new { id = product.Id })" class=" btn" style="color:white; height:30px; font-size:large" >+</a>
                 </div>
 
                </td>

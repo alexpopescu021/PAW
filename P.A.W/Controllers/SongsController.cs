@@ -9,9 +9,12 @@ using PAW.ViewModels;
 using PAW.ViewModels.Songs;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 namespace P.A.W.Controllers
 {
     [Authorize]
@@ -70,27 +73,60 @@ namespace P.A.W.Controllers
             return View("_SongsTable", songViewModel);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> UploadFile(IFormFile file)
-        //{
-        //    if (file == null || file.Length == 0)
-        //        return Content("file not selected");
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(IFormFile file)
+        {
+            ImageCodecInfo myImageCodecInfo;
+            Encoder myEncoder;
+            Encoder myEncoder1;
+            EncoderParameter myEncoderParameter;
+            EncoderParameter myEncoderParameterRotate;
+            EncoderParameters myEncoderParameters;
+            myImageCodecInfo = GetEncoderInfo("image/jpeg");
+            myEncoder = Encoder.Transformation;
+            myEncoder1 = Encoder.Compression; // foloseste LZW
+            myEncoderParameters = new EncoderParameters(1);
+            if (file == null || file.Length == 0)
+                return Content("file not selected");
 
-        //    var path = Path.Combine(
-        //                 "Assets",
-        //                file.FileName);
+            var path = Path.Combine(
+                         "Assets",
+                        file.FileName);
+            if(file.ContentType == "image/jpeg")
+            { 
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                using (var img = Image.FromStream(memoryStream))
+                {
+                    myEncoderParameter = new EncoderParameter(myEncoder1, (long)EncoderValue.CompressionLZW);
+                    myEncoderParameterRotate = new EncoderParameter(myEncoder, (long)EncoderValue.TransformRotate90);
+                    myEncoderParameters.Param[0] = myEncoderParameterRotate;
+                    img.Save("EncodeSave.jpg", myImageCodecInfo, myEncoderParameters);
+                }
+            }
+            }
 
-        //    using (var stream = new FileStream(path, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(stream);
-        //    }
-        //    var name = file.FileName.ToString();
-        //    string[] file_name = name.Split('_', '.');
-        //    songService.CreateNewSong(file_name[0], "Genre", path, file_name[1],1.00m);
+            var name = file.FileName.ToString();
+            string[] file_name = name.Split('_', '.');
 
-        //    return RedirectToAction("Index");
-        //}
+            songService.CreateNewSong(file_name[0], "Genre", file_name[1], 1.00m, path);
 
+            return RedirectToAction("Index");
+        }
+
+        private static ImageCodecInfo GetEncoderInfo(String mimeType)
+        {
+            int j;
+            ImageCodecInfo[] encoders;
+            encoders = ImageCodecInfo.GetImageEncoders();
+            for (j = 0; j < encoders.Length; ++j)
+            {
+                if (encoders[j].MimeType == mimeType)
+                    return encoders[j];
+            }
+            return null;
+        }
         public async Task<IActionResult> Download(string filename)
         {
             if (filename == null)

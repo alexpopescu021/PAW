@@ -154,6 +154,8 @@ namespace PAW.Controllers
             var songs = context.Carts.FirstOrDefault().Songs.ToList();
             context.Histories.FirstOrDefault().total = total;
             context.Histories.FirstOrDefault().Songs = songs;
+            context.Carts.FirstOrDefault().total = 0;
+            context.Carts.FirstOrDefault().Songs.Clear();
             context.SaveChanges();
 
           

@@ -49,7 +49,7 @@
             <th width="40">Singer</th>
             <th width="30">Genre</th>
 
-            <th width="50">Picture</th>
+            <th width="50">Player</th>
             @if (User.IsInRole("Admin"))
             {
                 <th width="40">Edit / Delete</th>
@@ -75,8 +75,11 @@
 
 
             <td>
-                <img src="@song.Path" width="100" height="100" />
+                <audio controls="controls">
+                    <source src="../Assets/RickAstley_NeverGonnaGiveYouUp.mp3" type="audio/mpeg" />
 
+                    <source src="@song.Path" type="audio/mpeg" />
+                    </audio>
 
             </td>
             @if (User.IsInRole("Admin"))
